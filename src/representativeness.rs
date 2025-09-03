@@ -111,8 +111,8 @@ pub fn compute() {
     println!("Probabilities of samples being safe and live, for various parameters.");
     println!("n: sample size");
     println!("f: assumed system-wide fraction of stake controlled by malicious nodes");
-    println!("A sample not unsafe if at least 2/3 of its nodes are faulty.");
-    println!("A sample not live if at least 2/3 of its nodes are faulty.");
+    println!("A sample not safe if at least 2/3 of its nodes are faulty.");
+    println!("A sample not live if at least 1/3 of its nodes are faulty.");
     println!();
     println!(" ______________________________________________ ");
     println!("|      n |      f | not safe | not live | type |");
