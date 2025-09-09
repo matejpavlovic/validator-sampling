@@ -59,7 +59,7 @@ fn bin_probability_cdf(n: u32, p: &BigRational, k: u32) -> BigRational {
 // fault_threshold faulty validators.
 pub fn failure_probability(sample_size: u32, f_num: u32, f_denom: u32, fault_threshold: f64) -> BigRational {
     let f = BigRational::new(BigInt::from(f_num), BigInt::from(f_denom));
-    let max_faults = ((sample_size as f64) * fault_threshold).floor() as u32;
+    let max_faults = ((sample_size as f64) * fault_threshold).ceil() as u32 - 1;
 
     BigRational::one() - &bin_probability_cdf(sample_size, &f, max_faults)
 }
