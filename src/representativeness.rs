@@ -166,4 +166,26 @@ pub fn compute() {
              simulate_prob(90, 0.2, 1.0/3.0, sim_iterations),
     );
     println!(" ---------------------------------------------- ");
+    println!();
+    println!("For a failure probability 1.9e-16, these are the possible quorum and sample sizes.");
+    println!("Read 'x: y / z' as: If we require a fraction x of the sample to be correct with");
+    println!("probability 1.9e-16, the smallest sample is z, out of which y or more nodes are");
+    println!("faulty with probability at most 1.9e-16.");
+    let max_failure_prob = 1.9e-16;
+    let max_sample_size = 200;
+    let mut max_faulty_fraction = 0.99;
+    let step = 0.01;
+    while max_faulty_fraction > 1.0/3.0 {
+        match min_sample_size(1, 3, max_faulty_fraction, max_failure_prob, max_sample_size) {
+            Some(sample_size) => {
+                let quorum = (sample_size as f64 * max_faulty_fraction).floor() as u32 + 1;
+                println!("{max_faulty_fraction:.2}: {:3} / {:3}", quorum, sample_size);
+            }
+            None => {
+                println!("{max_faulty_fraction:.2}: A sample size greater than {max_sample_size} would be needed.");
+                break;
+            }
+        }
+        max_faulty_fraction -= step;
+    }
 }
